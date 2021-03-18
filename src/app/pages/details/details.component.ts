@@ -31,7 +31,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
             this.router.navigate(['/app']);
         }
 
-
+        this.accountService.getAuthentication().then(user => {
+            if (user) {
+                this.isAuthenticated = true;
+            }
+        })
         // when a ticket is deleted ('canceled') if everything go well, go to ticket page
         this.ticketService.onDeleted.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.router.navigate(['/app/tickets']);
@@ -43,17 +47,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
         });
     }
 
-    ionViewDidEnter() {
-        this.accountService.getAuthentication().then(user => {
-            if (user) {
-                this.isAuthenticated = true;
-            }
-        });
-
-    }
-
-    async onDoPayment() {
-        await this.ticketService.add();
+    // Add a ticket to ticket's list
+    onDoPayment() {
+        this.ticketService.add();
     }
 
     goToLogin() {
@@ -65,6 +61,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
         })
     }
 
+    // delete one ticket from ticket's list
     onCancelTicket() {
         this.ticketService.delete();
     }
@@ -84,7 +81,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         clearForm(this.form);
-        this.ticketService.onStateChange(EServiceState.Cancel);
+        this.ticketService.onStateChange(EServiceState.Browse)
     }
 
 }

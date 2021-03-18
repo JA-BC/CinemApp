@@ -76,8 +76,15 @@ export class AuthService {
     this.state = state;
   }
 
-  getAuthentication() {
-    return this.fireauth.authState.pipe(first()).toPromise();
+  async getAuthentication() {
+    try {
+      this.onStateChange(EServiceState.Load);
+      return await this.fireauth.authState.pipe(first()).toPromise();
+    } catch(e) {
+        this._onError$.next(e);
+    } finally {
+      this.onStateChange(EServiceState.Browse);
+    }
   }
 
   async logout() {

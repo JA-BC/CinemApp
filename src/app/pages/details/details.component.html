@@ -48,12 +48,12 @@
       </ion-item>
     </ion-list>
 
-    <ion-row>
+    <ion-row *ngIf="!ticketService.editing">
       <ion-col>
         <ion-item lines="none" class="ion-border-bottom ion-border-primary">
           <ion-label color="medium">Metodo de pago</ion-label>
           <ion-select class="ion-select-custom" [(ngModel)]="ticketService.model.paymentMethod"
-            name="payment" plaholder="Pagar por ..." required [disabled]="ticketService.editing">
+            name="payment" plaholder="Pagar por ..." required>
             <ion-select-option *ngFor="let p of payment" [value]="p">
                 {{ p }}
             </ion-select-option>
@@ -73,17 +73,19 @@
 
     <ion-row class="ion-justify-content-center">
       <ion-col size="12">
-        <ion-button [disabled]="form.invalid || form.pristine || ticketService.loading" *ngIf="isAuthenticated; else notAuthenticated"
-          (click)="ticketService.editing ? onCancelTicket() : onDoPayment()" expand="block">
+        <ion-button [disabled]="form.invalid || ticketService.loading || accountService.loading"
+            *ngIf="isAuthenticated; else notAuthenticated"
+            (click)="ticketService.editing ? onCancelTicket() : onDoPayment()" expand="block">
           <ion-text class="ion-text-capitalize">
-            <ion-spinner color="white" *ngIf="ticketService.loading"></ion-spinner>
-            <span [class.ion-hide]="ticketService.loading">
+            <ion-spinner color="white" *ngIf="ticketService.loading || accountService.loading"></ion-spinner>
+            <span [class.ion-hide]="ticketService.loading || accountService.loading">
                 {{ ticketService.editing ? 'Cancelar' : 'Realizar Pago' }}
             </span>
           </ion-text>
         </ion-button>
+
         <ng-template #notAuthenticated>
-          <ion-button [disabled]="form.invalid || form.pristine" (click)="goToLogin()" expand="block">
+          <ion-button [disabled]="form.invalid" (click)="goToLogin()" expand="block">
             Accede para confirmar tu orden
           </ion-button>
         </ng-template>

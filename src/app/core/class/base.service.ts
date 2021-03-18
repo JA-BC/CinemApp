@@ -78,14 +78,15 @@ export class FirebaseService<TModel extends IEntity<string>> {
     async delete(model?: TModel) {
         try {
             this.onStateChange(EServiceState.Load);
-            const item = this.firestore.doc(`${this.collectionName}/${model.id}`);
-            await item.delete();
+            const item = Object.assign({}, this.model, model);
+            const doc = this.firestore.doc(`${this.collectionName}/${item.id}`);
+            await doc.delete();
             this.onDeleted.next(model);
             return model;
         } catch(e) {
             this._onError$.next(e);
         } finally {
-            this.onStateChange(EServiceState.Browse);
+            this.onStateChange(EServiceState.Update);
         }
     }
 
