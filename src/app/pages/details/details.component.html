@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/app/home" color="primary"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-card style="height: 12rem;">
+        <ion-thumbnail class="ion-w-100 ion-h-100">
+            <ion-img [src]="ticketService.model.movie?.imgURL"></ion-img>
+        </ion-thumbnail>
+        <div class="backdrop"></div>
+        <ion-label color="white" class="ion-absolute ion-bottom-0 ion-p-3">
+          <h6 class="ion-font-bold">{{ ticketService.model.movie?.name }}</h6>
+          <small>{{ ticketService.model.movie?.schedule }}</small>
+        </ion-label>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <form #form="ngForm">
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" class="ion-border-bottom ion-border-primary">
+          <ion-label color="medium" class="ion-pl-3">No. de tickets</ion-label>
+            <ion-input type="number" name="count" [(ngModel)]="ticketService.model.count" min="1" required
+              [readonly]="ticketService.editing" inputmode="numeric" slot="end" class="ion-text-right"
+              placeholder="0">
+          </ion-input>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-list class="ion-py-2" lines="none">
+      <ion-list-header>
+        <ion-label color="primary" class="ion-font-base">
+          Detalles de la order:
+        </ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let o of ticketService.model.order">
+        <ion-label color="medium">{{ o.name }}</ion-label>
+        <ion-label color="primary" slot="end" class="ion-text-right">$ {{ o.price }}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" class="ion-border-bottom ion-border-primary">
+          <ion-label color="medium">Metodo de pago</ion-label>
+          <ion-select class="ion-select-custom" [(ngModel)]="ticketService.model.paymentMethod"
+            name="payment" plaholder="Pagar por ..." required [disabled]="ticketService.editing">
+            <ion-select-option *ngFor="let p of payment" [value]="p">
+                {{ p }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-label color="primary">
+          <h1>$ {{ subtotal }} DOP.</h1>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12">
+        <ion-button [disabled]="form.invalid || form.pristine || ticketService.loading" *ngIf="isAuthenticated; else notAuthenticated"
+          (click)="ticketService.editing ? onCancelTicket() : onDoPayment()" expand="block">
+          <ion-text class="ion-text-capitalize">
+            <ion-spinner color="white" *ngIf="ticketService.loading"></ion-spinner>
+            <span [class.ion-hide]="ticketService.loading">
+                {{ ticketService.editing ? 'Cancelar' : 'Realizar Pago' }}
+            </span>
+          </ion-text>
+        </ion-button>
+        <ng-template #notAuthenticated>
+          <ion-button [disabled]="form.invalid || form.pristine" (click)="goToLogin()" expand="block">
+            Accede para confirmar tu orden
+          </ion-button>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

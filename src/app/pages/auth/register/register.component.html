@@ -1,0 +1,72 @@
+<ion-content>
+
+  <ion-row class="ion-justify-content-center ion-mt-5 ion-mb-4">
+    <ion-col class="ion-text-center">
+      <ion-thumbnail style="width: 5rem; height: 5rem;" class="ion-mx-auto ion-my-2">
+        <ion-img src="assets/img/cinema.png"></ion-img>
+      </ion-thumbnail>
+      <ion-label color="primary">
+        <h1>CinemApp</h1>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <form #form="ngForm" class="ion-px-2">
+    <ion-row>
+      <ion-col>
+        <ion-input-wrapper [ctrl]="fullname" label="Nombre y apellido">
+            <ion-input name="fullname" [(ngModel)]="model.fullname" #fullname="ngModel"
+                class="ion-border-bottom ion-border-primary" required>
+            </ion-input>
+        </ion-input-wrapper>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input-wrapper [ctrl]="email" label="Correo electronico">
+            <ion-input name="email" [(ngModel)]="model.email" #email="ngModel"
+                class="ion-border-bottom ion-border-primary" [pattern]="PATTERNS.email" required>
+            </ion-input>
+        </ion-input-wrapper>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input-wrapper [ctrl]="password" label="Contraseña">
+            <ion-input type="password" name="password" [(ngModel)]="model.password"
+                class="ion-border-bottom ion-border-primary" #password="ngModel" minlength="8" required>
+            </ion-input>
+        </ion-input-wrapper>
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" (click)="service.register(model)"
+          [disabled]="form.invalid || form.pristine || service.loading">
+          <ion-text class="ion-text-capitalize">
+            <ion-spinner color="white" *ngIf="service.loading"></ion-spinner>
+            <span [class.ion-hide]="service.loading">Registrarme</span>
+          </ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-button color="primary" fill="clear" routerLink="/auth/login">
+          Ya tienes una cuenta, inicia sesión
+        </ion-button>
+
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

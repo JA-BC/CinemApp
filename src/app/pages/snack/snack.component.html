@@ -1,0 +1,80 @@
+
+<div class="backdrop ion-fixed" *ngIf="!service.isHide" (click)="service.toggle()" style="z-index: 100;"></div>
+
+<ng-container *ngIf="!service.isHide">
+  <div class="combobox-container" [@slideUp]>
+      <ion-card class="ion-shadow-0 ion-m-0 ion-px-2 ion-round-top ion-round-25">
+        <ion-row class="ion-justify-content-end">
+          <ion-col size="auto">
+            <ion-button color="medium" fill="clear" (click)="service.toggle()">
+              Cerrar
+            </ion-button>
+
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="ion-flex ion-align-items-center ion-mt-n4">
+              <ion-img src="assets/img/popcorn.png" style="width: 3rem"></ion-img>
+              <ion-label color="dark" class="ion-ml-3">
+                Agregar un bocao
+              </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <form #form="ngForm">
+            <ion-row>
+                <ion-col size="9">
+                  <ion-row class="ion-align-items-center">
+                    <ion-col size="9">
+                      <ion-select class="ion-select-custom ion-border-bottom ion-border-primary" value="1"
+                          name="snack" [(ngModel)]="service.model" placeholder="Elige una opcion" required>
+                          <ion-select-option [value]="snack" *ngFor="let snack of snacks">
+                              {{ snack.name }}
+                          </ion-select-option>
+                      </ion-select>
+                    </ion-col>
+                    <ion-col size="3" class="ion-mb-n1">
+                      <div class="ion-flex ion-align-items-center">
+                        <ion-label color="medium">#</ion-label>
+                          <ion-input type="number" class="ion-border-bottom ion-border-primary ion-text-right" placeholder="0"
+                              name="count" [(ngModel)]="service.model.count"
+                              min="1" required inputmode="numeric" [disabled]="!service.model.name">
+                          </ion-input>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-button expand="block" class="ion-h-100 ion-m-0" [disabled]="form.invalid || form.untouched"
+                      (click)="service.onAdd()">
+                    <ion-icon name="add" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+        </form>
+
+        <ng-container *ngFor="let e of service.entities">
+            <ion-row>
+                <ion-col size="9">
+                  <ion-movie-ticket [name]="e.name" [schedule]="'$ '+e.price * e.count+' DOP.'"></ion-movie-ticket>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-button expand="block" class="ion-h-100 ion-m-0" (click)="service.onDelete(e)">
+                    <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+        </ng-container>
+
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" (click)="service.saveChanges()">
+              Confirmar orden
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+  </div>
+</ng-container>

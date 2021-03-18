@@ -1,0 +1,51 @@
+
+<ion-content>
+
+    <ion-row>
+        <ion-col>
+            <ion-card style="height: 12rem;">
+                <ion-thumbnail class="ion-w-100 ion-h-100">
+                    <ion-img src="assets/img/room-bg.jpg"></ion-img>
+                </ion-thumbnail>
+                <div class="backdrop"></div>
+                <ion-label color="white" class="ion-absolute ion-bottom-0 ion-p-3">
+                    <h6 class="ion-font-bold">CinemApp</h6>
+                    <small>Agenda tus entradas en cualquier momento</small>
+                </ion-label>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col>
+            <ion-card class="ion-shadow ion-activatable" (click)="snackService.toggle()">
+                <div class="ion-flex ion-py-2 ion-px-3 ion-align-items-center">
+                  <ion-img src="assets/img/popcorn.png" style="width: 1.75rem"></ion-img>
+                  <ion-label class="ion-ml-3">
+                    <h6>Agreagar un bocao</h6>
+                  </ion-label>
+                </div>
+                <ion-ripple-effect></ion-ripple-effect>
+              </ion-card>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col size="6">
+            <ion-card-food title="Bebidas" imgURL="assets/img/drink-bg.jpg"></ion-card-food>
+        </ion-col>
+        <ion-col size="6">
+            <ion-card-food title="Picaderas" imgURL="assets/img/popcorn-bg.jpg"></ion-card-food>
+        </ion-col>
+    </ion-row>
+    
+    <ion-row>
+        <ion-col>
+            <ng-container *ngFor="let m of movieService.entities | async">
+                <ion-movie-ticket [name]="m.name" [schedule]="m.schedule" (click)="onSelectMovie(m)">
+                </ion-movie-ticket>
+            </ng-container>
+        </ion-col>
+    </ion-row>
+
+</ion-content>

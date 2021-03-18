@@ -1,0 +1,20 @@
+
+<ion-content>
+    <br>
+    <ion-row>
+        <ion-col>
+            <ng-container *ngIf="ticketService.entities | async as entities">
+                <ng-template ngFor [ngForOf]="entities" let-t>
+                    <ion-movie-ticket [name]="t.movie.name" [schedule]="t.movie.schedule" (click)="onSelectTicket(t)">
+                    </ion-movie-ticket><br>
+                </ng-template>    
+                <ng-template [ngIf]="entities.length < 1">
+                    <ion-label color="primary" class="ion-text-center">
+                        <h1>No tienes tickets</h1>
+                    </ion-label>
+                </ng-template>
+            </ng-container>
+        </ion-col>
+    </ion-row>
+
+</ion-content>

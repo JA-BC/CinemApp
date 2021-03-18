@@ -1,0 +1,15 @@
+
+<ion-card style="height: 12rem;">
+    <ion-thumbnail class="ion-w-100 ion-h-100">
+        <ion-img [src]="imgURL" [alt]="title"></ion-img>
+    </ion-thumbnail>
+    <div class="backdrop"></div>
+    <div class="ion-absolute ion-bottom-0 ion-right-0 ion-left-0 ion-p-3 ion-text-center">
+        <ion-button color="primary" shape="round" class="ion-button-rounded">
+            <ion-icon name="add" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-label color="white">       
+            <h6>{{ title }}</h6>
+        </ion-label>
+    </div>
+</ion-card>

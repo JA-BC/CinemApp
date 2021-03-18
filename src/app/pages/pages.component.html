@@ -1,0 +1,15 @@
+
+<ion-tabs slot="bottom" [style.z-index]="snackService.isHide ? 1 : -1">
+    <ion-tab-bar color="primary">
+        <ion-tab-button tab="home">
+            <ion-img src="assets/img/home.png" style="width: 1.75rem;" class="ion-mb-1"></ion-img>
+            <ion-label>Inicio</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="tickets">
+            <ion-img src="assets/img/interface.png" style="width: 1.75rem;" class="ion-mb-1"></ion-img>
+            <ion-label>Mis tickets</ion-label>
+        </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>
+
+<ion-snack></ion-snack>
