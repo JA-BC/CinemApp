@@ -12,8 +12,6 @@ export class SnackService {
 
     model: Partial<ISnack> = { };
     entities = new Array<ISnack>();
-    // Keep entites without changes
-    shadowEntities = new Array<ISnack>();
     
     constructor() { }
     
@@ -30,6 +28,7 @@ export class SnackService {
 
         this.entities.push(item);
         console.log('[SNACK ADDED]', item);
+        this.model.count = 0;
         return Promise.resolve(item);
     }
 

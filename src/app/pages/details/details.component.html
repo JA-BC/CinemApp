@@ -73,8 +73,7 @@
 
     <ion-row class="ion-justify-content-center">
       <ion-col size="12">
-        <ion-button [disabled]="form.invalid || ticketService.loading"
-            *ngIf="accountService.isAuthenticated | async as auth; else notAuthenticated"
+        <ion-button [disabled]="form.invalid || ticketService.loading" *ngIf="accountService.isAuthenticated; else notAuthenticated"
             (click)="ticketService.isCancelable ? onCancelTicket() : onDoPayment()" expand="block">
           <ion-text class="ion-text-capitalize">
             <ion-spinner color="white" *ngIf="ticketService.loading"></ion-spinner>

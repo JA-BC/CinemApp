@@ -6,6 +6,7 @@ import { EServiceState } from '@core/interfaces/services.model';
 import { clearForm } from '@core/utils/functions';
 import { AccountService } from '@providers/account.service';
 import { TicketService } from '@providers/ticket.service';
+import { SnackService } from '@providers/snack.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -19,6 +20,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly accountService: AccountService,
+        private readonly snackService: SnackService,
         private readonly destroy$: DestroyService,
         private readonly router: Router,
         public readonly ticketService: TicketService
@@ -37,6 +39,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
         // when a ticket is added if everything go well, go to home page
         this.ticketService.onAdded.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.snackService.entities = []; // clean snacks
             this.router.navigate(['/app/tickets']);
         });
     }

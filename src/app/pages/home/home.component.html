@@ -1,7 +1,7 @@
 
 <ion-content>
 
-    <ion-fab vertical="top" horizontal="end" *ngIf="accountService.isAuthenticated | async">
+    <ion-fab vertical="top" horizontal="end" *ngIf="accountService.isAuthenticated">
         <ion-fab-button (click)="logout()">
             <ion-icon name="log-out-outline"></ion-icon>
         </ion-fab-button>

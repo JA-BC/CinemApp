@@ -26,12 +26,20 @@ export class AuthService {
 
   model: Partial<IUser> = { };
   returnUrl: string;
-  isAuthenticated = this.fireauth.authState.pipe(first());
+  isAuthenticated: boolean = false;
 
 
   constructor(
     protected readonly fireauth: AngularFireAuth
-  ) {  }
+  ) {
+      this.fireauth.authState.pipe(first()).subscribe(user => {
+          if (user) {
+            this.isAuthenticated = true;
+          } else {
+            this.isAuthenticated = false;
+          }
+      })
+  }
 
   async login(model?: IUser) {
     try {
@@ -41,10 +49,11 @@ export class AuthService {
       
       if (this.returnUrl) {
         this.router.navigate([this.returnUrl]);
-        return res;
+      } else {
+        this.router.navigate([this.rootUrl]);
       }
-
-      this.router.navigate([this.rootUrl]);
+        
+      this.isAuthenticated = true;
       return res;
     } catch (e) {
       this._onError$.next(e);
@@ -79,6 +88,7 @@ export class AuthService {
 
   async logout() {
     await this.fireauth.signOut();
+    this.isAuthenticated = false;
   }
 
 }

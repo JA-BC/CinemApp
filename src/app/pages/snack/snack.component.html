@@ -47,7 +47,7 @@
                   </ion-row>
                 </ion-col>
                 <ion-col size="3">
-                    <ion-button expand="block" class="ion-h-100 ion-m-0" [disabled]="form.invalid || form.untouched || service.model.count < 1"
+                    <ion-button expand="block" class="ion-h-100 ion-m-0" [disabled]="form.invalid || form.pristine || service.model.count < 1"
                         (click)="service.onAdd()">
                     <ion-icon name="add" slot="icon-only"></ion-icon>
                   </ion-button>

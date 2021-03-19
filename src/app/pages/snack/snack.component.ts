@@ -20,8 +20,4 @@ export class SnackComponent implements OnInit {
 
     ngOnInit(): void { }
 
-    /* validCount(e: any) { */
-    /*     this.service.model.count = Number(e) < 1 ? 1 : Number(e); */
-    /* } */
-
 }
