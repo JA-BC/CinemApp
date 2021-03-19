@@ -19,7 +19,7 @@ export class TicketComponent implements OnInit {
     }
 
     onSelectTicket(ticket: ITicket) {
-        this.ticketService.onStateChange(EServiceState.Update);
+        this.ticketService.isCancelable = true;
         this.ticketService.model = ticket;
         this.router.navigate(['/app/details']);
     }

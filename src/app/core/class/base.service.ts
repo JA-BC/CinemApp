@@ -37,7 +37,9 @@ export class FirebaseService<TModel extends IEntity<string>> {
     constructor(
         protected readonly collectionName: string,
         protected readonly firestore: AngularFirestore
-    ) { }
+    ) {
+        this.collection = this.firestore.collection<TModel>(this.collectionName);
+    }
 
     async add(model?: TModel): Promise<TModel> {
         try {
@@ -57,7 +59,6 @@ export class FirebaseService<TModel extends IEntity<string>> {
     async load() {
         try {
             this.onStateChange(EServiceState.Load);
-            this.collection = this.firestore.collection<TModel>(this.collectionName);
             this.entities = this.collection.snapshotChanges().pipe(
                 map(actions => actions.map(a => {
                     const data = a.payload.doc.data() as TModel;
@@ -86,7 +87,7 @@ export class FirebaseService<TModel extends IEntity<string>> {
         } catch(e) {
             this._onError$.next(e);
         } finally {
-            this.onStateChange(EServiceState.Update);
+            this.onStateChange(EServiceState.Browse);
         }
     }
 

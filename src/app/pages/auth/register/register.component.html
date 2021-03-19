@@ -16,7 +16,7 @@
       <ion-col>
         <ion-input-wrapper [ctrl]="fullname" label="Nombre y apellido">
             <ion-input name="fullname" [(ngModel)]="model.fullname" #fullname="ngModel"
-                class="ion-border-bottom ion-border-primary" required>
+                class="ion-border-bottom ion-border-primary" placeholder="Juan Perez" required>
             </ion-input>
         </ion-input-wrapper>
       </ion-col>
@@ -26,7 +26,8 @@
       <ion-col>
         <ion-input-wrapper [ctrl]="email" label="Correo electronico">
             <ion-input name="email" [(ngModel)]="model.email" #email="ngModel"
-                class="ion-border-bottom ion-border-primary" [pattern]="PATTERNS.email" required>
+                class="ion-border-bottom ion-border-primary" [pattern]="PATTERNS.email"
+                placeholder="admin@example.com" required>
             </ion-input>
         </ion-input-wrapper>
       </ion-col>
@@ -36,7 +37,8 @@
       <ion-col>
         <ion-input-wrapper [ctrl]="password" label="Contraseña">
             <ion-input type="password" name="password" [(ngModel)]="model.password"
-                class="ion-border-bottom ion-border-primary" #password="ngModel" minlength="8" required>
+                class="ion-border-bottom ion-border-primary" #password="ngModel" minlength="8"
+                placeholder="********" required>
             </ion-input>
         </ion-input-wrapper>
       </ion-col>

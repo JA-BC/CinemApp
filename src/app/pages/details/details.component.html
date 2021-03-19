@@ -28,7 +28,7 @@
         <ion-item lines="none" class="ion-border-bottom ion-border-primary">
           <ion-label color="medium" class="ion-pl-3">No. de tickets</ion-label>
             <ion-input type="number" name="count" [(ngModel)]="ticketService.model.count" min="1" required
-              [readonly]="ticketService.editing" inputmode="numeric" slot="end" class="ion-text-right"
+              [readonly]="ticketService.isCancelable" inputmode="numeric" slot="end" class="ion-text-right"
               placeholder="0">
           </ion-input>
         </ion-item>
@@ -48,7 +48,7 @@
       </ion-item>
     </ion-list>
 
-    <ion-row *ngIf="!ticketService.editing">
+    <ion-row *ngIf="!ticketService.isCancelable">
       <ion-col>
         <ion-item lines="none" class="ion-border-bottom ion-border-primary">
           <ion-label color="medium">Metodo de pago</ion-label>
@@ -73,13 +73,13 @@
 
     <ion-row class="ion-justify-content-center">
       <ion-col size="12">
-        <ion-button [disabled]="form.invalid || ticketService.loading || accountService.loading"
-            *ngIf="isAuthenticated; else notAuthenticated"
-            (click)="ticketService.editing ? onCancelTicket() : onDoPayment()" expand="block">
+        <ion-button [disabled]="form.invalid || ticketService.loading"
+            *ngIf="accountService.isAuthenticated | async as auth; else notAuthenticated"
+            (click)="ticketService.isCancelable ? onCancelTicket() : onDoPayment()" expand="block">
           <ion-text class="ion-text-capitalize">
-            <ion-spinner color="white" *ngIf="ticketService.loading || accountService.loading"></ion-spinner>
+            <ion-spinner color="white" *ngIf="ticketService.loading"></ion-spinner>
             <span [class.ion-hide]="ticketService.loading || accountService.loading">
-                {{ ticketService.editing ? 'Cancelar' : 'Realizar Pago' }}
+                {{ ticketService.isCancelable ? 'Cancelar' : 'Realizar Pago' }}
             </span>
           </ion-text>
         </ion-button>
@@ -91,6 +91,7 @@
         </ng-template>
       </ion-col>
     </ion-row>
+    <br>
   </form>
 
 </ion-content>

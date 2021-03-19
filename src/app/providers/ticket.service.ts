@@ -6,6 +6,8 @@ import { ITicket } from '../models/ticket.model';
 @Injectable({ providedIn: 'root' })
 export class TicketService extends FirebaseService<ITicket> {
 
+    isCancelable: boolean = false;
+
     constructor(
         public readonly firestore: AngularFirestore
     ) {

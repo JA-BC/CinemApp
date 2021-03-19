@@ -18,8 +18,6 @@ export class AuthService {
   readonly rootUrl: string = '/app';
   readonly loginUrl: string = '/auth/login';
 
-  returnUrl: string;
-
   state: EServiceState = EServiceState.Browse;
 
   get loading() {
@@ -27,6 +25,9 @@ export class AuthService {
   } 
 
   model: Partial<IUser> = { };
+  returnUrl: string;
+  isAuthenticated = this.fireauth.authState.pipe(first());
+
 
   constructor(
     protected readonly fireauth: AngularFireAuth
@@ -76,20 +77,8 @@ export class AuthService {
     this.state = state;
   }
 
-  async getAuthentication() {
-    try {
-      this.onStateChange(EServiceState.Load);
-      return await this.fireauth.authState.pipe(first()).toPromise();
-    } catch(e) {
-        this._onError$.next(e);
-    } finally {
-      this.onStateChange(EServiceState.Browse);
-    }
-  }
-
   async logout() {
     await this.fireauth.signOut();
-    this.router.navigate([this.loginUrl]);
   }
 
 }

@@ -15,7 +15,6 @@ import { takeUntil } from 'rxjs/operators';
 export class DetailsComponent implements OnInit, OnDestroy {
 
     @ViewChild('form', { static: true }) form: NgForm;
-    isAuthenticated: boolean = false;
     payment = ['Tarjeta', 'Otro'];
 
     constructor(
@@ -31,11 +30,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
             this.router.navigate(['/app']);
         }
 
-        this.accountService.getAuthentication().then(user => {
-            if (user) {
-                this.isAuthenticated = true;
-            }
-        })
         // when a ticket is deleted ('canceled') if everything go well, go to ticket page
         this.ticketService.onDeleted.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.router.navigate(['/app/tickets']);
@@ -43,7 +37,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
         // when a ticket is added if everything go well, go to home page
         this.ticketService.onAdded.pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.router.navigate(['/app/home']);
+            this.router.navigate(['/app/tickets']);
         });
     }
 
@@ -81,7 +75,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         clearForm(this.form);
-        this.ticketService.onStateChange(EServiceState.Browse)
+        this.ticketService.isCancelable = false;
     }
 
 }
