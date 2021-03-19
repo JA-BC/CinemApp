@@ -44,7 +44,7 @@
       </ion-list-header>
       <ion-item *ngFor="let o of ticketService.model.order">
         <ion-label color="medium">{{ o.name }}</ion-label>
-        <ion-label color="primary" slot="end" class="ion-text-right">$ {{ o.price }}</ion-label>
+        <ion-note color="primary" slot="end" class="ion-font-base">$ {{ o.price }}</ion-note>
       </ion-item>
     </ion-list>
 
