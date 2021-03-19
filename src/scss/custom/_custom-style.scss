@@ -30,9 +30,12 @@
   height: auto;
   max-height: 25rem;
   box-shadow: 2px -2px 4px rgba(0, 0, 0, .1);
-  // background-color: #fff;
-  overflow: auto;
   z-index: 9999;
+
+  ion-card {
+      max-height: 25rem;
+      overflow: auto;
+  }
 
 }
 
